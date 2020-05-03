@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arbitrary!</title>
+
+    <style>
+      #words {
+        width: 500px;
+      }
+      #periodic {
+        margin-left: 20px;
+      }
+      #seconds {
+        width: 40px;
+        text-align: center;
+      }
+      #arbitrarize {
+        margin-left: 20px;
+      }
+      #next {
+        font-size: 300px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>
+      Comma separated words:
+      <input type="text" id="words" value="C,G,D,A,E,B,Gb,Db,Ab,Eb,Bb,F">
+      <input type="checkbox" id="periodic">
+      every
+      <input type="text" id="seconds" value="1">
+      seconds
+      <input type="submit" id="arbitrarize" value="Arbitrarize!">
+    </p>
+
+    <h1 id="next">=_=</h1>
+  </body>
+
+  <script>
+    var Words = [];
+    var Interval = null;
+
+    function Reset() {
+      clearInterval(Interval);
+      Words = document.getElementById("words").value.split(",");
+    };
+
+    function NextWord() {
+      var candidate = "o^o";
+      while (true) {
+        candidate = Words[Math.floor(Math.random() * Words.length)];
+        if (document.getElementById("next").textContent !== candidate) {
+          break;
+        }
+      }
+      document.getElementById("next").textContent = candidate;
+    };
+
+    function PeriodicNextWord() {
+      NextWord();
+      Interval = setInterval(NextWord, document.getElementById("seconds").value * 1000);
+    };
+
+    function Arbitrarize() {
+      Reset();
+      if (document.getElementById("periodic").checked) {
+        PeriodicNextWord();
+      }
+      else {
+        NextWord();
+      }
+    };
+    
+    (function() {
+      document.getElementById("arbitrarize").onclick = Arbitrarize;
+      document.addEventListener("keypress", function(event) {
+        if (event.code === "Space") {
+          document.getElementById("arbitrarize").click();
+        }
+      });
+    })();
+  </script>
+</html>
