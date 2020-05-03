@@ -75,6 +75,7 @@
     
     (function() {
       document.getElementById("arbitrarize").onclick = Arbitrarize;
+      document.getElementById("next").onclick = Arbitrarize;
       document.addEventListener("keypress", function(event) {
         if (event.code === "Space") {
           document.getElementById("arbitrarize").click();
